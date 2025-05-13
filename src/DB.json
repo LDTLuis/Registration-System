@@ -1,0 +1,15 @@
+-- Criar tabela usuarios:
+
+CREATE TABLE usuarios (
+login VARCHAR(50) PRIMARY KEY,
+senha VARCHAR(50) NOT NULL,
+tipo VARCHAR(10) NOT NULL,
+matricula VARCHAR(20),
+FOREIGN KEY (matricula) REFERENCES alunos(matricula)
+);
+
+-- Inserir usuarios:
+
+INSERT INTO usuarios (login, senha, tipo) VALUES ('admin1', '1234', 'ADMIN');
+
+INSERT INTO usuarios (login, senha, tipo, matricula) VALUES ('PEDRO', 'senha123', 'ALUNO', '2025120001');
