@@ -1,6 +1,6 @@
 package dao;
 
-import model.Admin;
+import model.AdminUser;
 import model.StudantUser;
 import model.Users;
 import util.ConnectionFactory;
@@ -23,7 +23,7 @@ public class UserDAO {
                 String tipo = rs.getString("tipo");
 
                 if (tipo.equalsIgnoreCase("ADMIN")) {
-                    return new Admin(login, senha);
+                    return new AdminUser(login, senha);
                 } else if (tipo.equalsIgnoreCase("ALUNO")) {
                     String matricula = rs.getString("matricula");
                     return new StudantUser(login, senha, matricula);

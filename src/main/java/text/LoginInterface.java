@@ -23,7 +23,7 @@ public class LoginInterface {
         if (users != null) {
             System.out.println("\nLogin realizado com sucesso!");
 
-            if (users instanceof Admin) {
+            if (users instanceof AdminUser) {
                 System.out.println("Executando funções de admin...");
                 System.out.println();
                 users.showMenu();

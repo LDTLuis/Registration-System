@@ -8,8 +8,8 @@ import text.SelectInterface;
 import java.sql.Date;
 import java.util.Scanner;
 
-public class Admin extends Users {
-    public Admin(String login, String senha) {
+public class AdminUser extends Users {
+    public AdminUser(String login, String senha) {
         super(login, senha);
     }
 
