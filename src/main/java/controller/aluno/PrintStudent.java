@@ -1,6 +1,6 @@
 package controller.aluno;
 
-import model.StudantData;
+import model.StudentData;
 import util.ConnectionFactory;
 
 import javax.swing.*;
@@ -53,13 +53,13 @@ public class PrintStudent {
     }
 
 
-    public static void imprimirAlunos(List<StudantData> alunos) {
+    public static void imprimirAlunos(List<StudentData> alunos) {
         if (alunos.isEmpty()) {
             System.out.println("No Student found.");
             return;
         }
 
-        for (StudantData a : alunos) {
+        for (StudentData a : alunos) {
             System.out.println("==== Student Details ====");
             System.out.println("Name: " + a.getNome());
             System.out.println("Enrollment: " + a.getMatricula());
@@ -72,7 +72,7 @@ public class PrintStudent {
         }
     }
 
-    public static void imprimirAluno(StudantData a) {
+    public static void imprimirAluno(StudentData a) {
         if (a == null) {
             System.out.println("Student not found.");
             return;

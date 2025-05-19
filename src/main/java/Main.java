@@ -1,3 +1,4 @@
+import text.CreateInterface;
 import text.LoginInterface;
 import util.ConnectionFactory;
 
@@ -9,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         ConnectionFactory cf = new ConnectionFactory();
         LoginInterface loginInterface = new LoginInterface();
+        CreateInterface createInterface = new CreateInterface();
 
         Connection conn = cf.getConnection();
         try {
@@ -17,6 +19,10 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        loginInterface.showMenu();
+        createInterface.showMenuCreateTable();
+
+        createInterface.insertAdminInTable();
+
+        loginInterface.showMenuLogin();
     }
 }

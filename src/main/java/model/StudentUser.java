@@ -5,7 +5,7 @@ import controller.aluno.PrintStudent;
 
 import java.util.Scanner;
 
-public class StudantUser extends Users {
+public class StudentUser extends Users {
 
     Scanner sc = new Scanner(System.in);
     PrintStudent printStudent = new PrintStudent();
@@ -13,7 +13,7 @@ public class StudantUser extends Users {
 
     private String matricula;
 
-    public StudantUser(String login, String senha, String matricula) {
+    public StudentUser(String login, String senha, String matricula) {
         super(login, senha);
         this.matricula = matricula;
     }
@@ -34,7 +34,7 @@ public class StudantUser extends Users {
 
             switch (opcao) {
                 case "1":
-                    StudantData aluno = selectTable.buscarPorMatricula(matricula);
+                    StudentData aluno = selectTable.buscarPorMatricula(matricula);
                     printStudent.imprimirAluno(aluno);
                     break;
             }

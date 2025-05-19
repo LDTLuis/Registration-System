@@ -2,7 +2,7 @@ package text;
 
 import controller.aluno.PrintStudent;
 import controller.aluno.SelectTable;
-import model.StudantData;
+import model.StudentData;
 
 import java.util.List;
 import java.util.Scanner;
@@ -37,7 +37,7 @@ public class SelectInterface {
 
                     selectBy.buscarAluno(nomeBuscado);
                     System.out.println(nomeBuscado);
-                    List<StudantData> alunos = selectBy.buscarAluno(nomeBuscado);
+                    List<StudentData> alunos = selectBy.buscarAluno(nomeBuscado);
                     PrintStudent.imprimirAlunos(alunos);
 
                     break;

@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class StudantData {
+public class StudentData {
     private int id;
     private String nome;
     private String matricula;
@@ -11,7 +11,7 @@ public class StudantData {
     private Courses curso;
     private String CPF;
 
-    public StudantData(String nome, String matricula, String telefone, Date dataNascimento, Courses curso, String CPF) {
+    public StudentData(String nome, String matricula, String telefone, Date dataNascimento, Courses curso, String CPF) {
         this.nome = nome;
         this.matricula = matricula;
         this.telefone = telefone;

@@ -1,7 +1,7 @@
 package controller.aluno;
 
 
-import model.StudantData;
+import model.StudentData;
 import model.Courses;
 import util.ConnectionFactory;
 
@@ -14,8 +14,8 @@ import java.util.List;
 
 public class SelectTable {
 
-    public List<StudantData> buscarAluno(String nomeBuscado) {
-        List<StudantData> alunos = new ArrayList<>();
+    public List<StudentData> buscarAluno(String nomeBuscado) {
+        List<StudentData> alunos = new ArrayList<>();
 
         String sql = "SELECT * FROM alunos WHERE nome LIKE ?";
 
@@ -26,7 +26,7 @@ public class SelectTable {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                StudantData a = new StudantData(
+                StudentData a = new StudentData(
                         rs.getString("nome"),
                         rs.getString("matricula"),
                         rs.getString("telefone"),
@@ -44,8 +44,8 @@ public class SelectTable {
         return alunos;
     }
 
-    public List<StudantData> buscarAlunoMatricula(String matriculaBuscada) {
-        List<StudantData> alunos = new ArrayList<>();
+    public List<StudentData> buscarAlunoMatricula(String matriculaBuscada) {
+        List<StudentData> alunos = new ArrayList<>();
 
         String sql = "SELECT * FROM alunos WHERE matricula LIKE ?";
 
@@ -56,7 +56,7 @@ public class SelectTable {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                StudantData a = new StudantData(
+                StudentData a = new StudentData(
                         rs.getString("nome"),
                         rs.getString("matricula"),
                         rs.getString("telefone"),
@@ -74,9 +74,9 @@ public class SelectTable {
         return alunos;
     }
 
-    public StudantData buscarPorMatricula(String matricula) {
+    public StudentData buscarPorMatricula(String matricula) {
         String sql = "SELECT * FROM alunos WHERE matricula = ?";
-        StudantData aluno = null;
+        StudentData aluno = null;
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -85,7 +85,7 @@ public class SelectTable {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                aluno = new StudantData(
+                aluno = new StudentData(
                         rs.getString("nome"),
                         rs.getString("matricula"),
                         rs.getString("telefone"),

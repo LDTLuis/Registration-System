@@ -1,12 +1,12 @@
 package dao;
 
-import model.StudantData;
+import model.StudentData;
 import util.ConnectionFactory;
 
 import java.sql.*;
 import java.time.LocalDate;
 
-public class StudantDAO {
+public class StudentDAO {
 
     ConnectionFactory cf = new ConnectionFactory();
 
@@ -35,7 +35,7 @@ public class StudantDAO {
         }
     }
 
-    public void insert (StudantData aluno){
+    public void insert (StudentData aluno){
         String sql = "INSERT INTO alunos (nome, telefone, data_nascimento,curso, cpf) VALUES (?, ?, ?, ?, ?) RETURNING id";
         try(Connection conn = ConnectionFactory.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -73,5 +73,4 @@ public class StudantDAO {
             e.printStackTrace();
         }
     }
-
 }

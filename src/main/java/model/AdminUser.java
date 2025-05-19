@@ -2,13 +2,20 @@ package model;
 
 import controller.aluno.DeleteTable;
 import controller.aluno.UpdateTable;
-import dao.StudantDAO;
+import dao.StudentDAO;
 import text.SelectInterface;
 
 import java.sql.Date;
 import java.util.Scanner;
 
 public class AdminUser extends Users {
+
+    Scanner sc = new Scanner(System.in);
+    StudentDAO alunoDAO = new StudentDAO();
+    UpdateTable upd = new UpdateTable();
+    DeleteTable del = new DeleteTable();
+    SelectInterface si = new SelectInterface();
+
     public AdminUser(String login, String senha) {
         super(login, senha);
     }
@@ -16,14 +23,8 @@ public class AdminUser extends Users {
     @Override
     public void showMenu() {
 
-        Scanner sc = new Scanner(System.in);
-        StudantDAO alunoDAO = new StudantDAO();
-        UpdateTable upd = new UpdateTable();
-        DeleteTable del = new DeleteTable();
-        SelectInterface si = new SelectInterface();
-
-        StudantData pedro = new StudantData("Pedro",null,"999-999" , Date.valueOf("2005-01-01"), Courses.getById(12), "123456789");
-        StudantData luis = new StudantData("Luis",null,"999-999" , Date.valueOf("2005-03-21"), Courses.getById(12), "999123981");
+        StudentData pedro = new StudentData("Pedro",null,"999-999" , Date.valueOf("2005-01-01"), Courses.getById(12), "123456789");
+        StudentData luis = new StudentData("Luis",null,"999-999" , Date.valueOf("2005-03-21"), Courses.getById(12), "999123981");
 
         while (true) {
             System.out.println("=== Menu Admin ===");
