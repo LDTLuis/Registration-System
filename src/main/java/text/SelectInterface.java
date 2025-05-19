@@ -32,7 +32,7 @@ public class SelectInterface {
 
             switch (opcao) {
                 case "1":
-                    System.out.println("Enter the name of the student you want to search for: ");
+                    System.out.print("Enter the name of the student you want to search for: ");
                     String nomeBuscado = sc.nextLine().toUpperCase();
 
                     selectBy.buscarAluno(nomeBuscado);
@@ -42,7 +42,7 @@ public class SelectInterface {
 
                     break;
                 case "2":
-                    System.out.println("Enter the student's enrollment number you want to search for: ");
+                    System.out.print("Enter the student's enrollment number you want to search for: ");
                     String matriculaBuscada = sc.nextLine().toUpperCase();
 
                     selectBy.buscarAlunoMatricula(matriculaBuscada);

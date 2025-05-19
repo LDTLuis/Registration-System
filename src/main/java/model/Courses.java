@@ -47,4 +47,14 @@ public enum Courses {
         }
         return null;
     }
+
+    public static Courses getByNomeCursos(String nomeCurso) {
+        if (nomeCurso == null) return null;
+        String nomeEnum = nomeCurso.trim().toUpperCase().replace(" ", "_");
+        try {
+            return Courses.valueOf(nomeEnum);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
 }

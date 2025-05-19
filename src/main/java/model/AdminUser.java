@@ -23,8 +23,8 @@ public class AdminUser extends Users {
     @Override
     public void showMenu() {
 
-        StudentData pedro = new StudentData("Pedro",null,"999-999" , Date.valueOf("2005-01-01"), Courses.getById(12), "123456789");
-        StudentData luis = new StudentData("Luis",null,"999-999" , Date.valueOf("2005-03-21"), Courses.getById(12), "999123981");
+        StudentData pedro = new StudentData("Pedro",null ,"999-999" , Date.valueOf("2005-01-01"), Courses.getById(12), "123456789");
+        StudentData luis = new StudentData("Luis", null ,"999-999" , Date.valueOf("2005-03-21"), Courses.getById(12), "999123981");
 
         while (true) {
             System.out.println("=== Menu Admin ===");
@@ -43,9 +43,10 @@ public class AdminUser extends Users {
 
             switch (opcao) {
                 case "1":
-                    alunoDAO.createTable();
-                    alunoDAO.insert(pedro);
-                    alunoDAO.insert(luis);
+                    StudentData novoAluno = lerDadosAluno();
+                    if (novoAluno != null) {
+                        alunoDAO.insert(novoAluno);
+                    }
                     System.out.println();
                     break;
                 case "2":
@@ -61,6 +62,37 @@ public class AdminUser extends Users {
                     System.out.println("Invalid option");
                     break;
             }
+        }
+    }
+
+    private StudentData lerDadosAluno() {
+        try {
+            System.out.print("Nome: ");
+            String nome = sc.nextLine().trim();
+
+            System.out.print("Telefone: ");
+            String telefone = sc.nextLine().trim();
+
+            System.out.print("Data de nascimento (yyyy-MM-dd): ");
+            String dataStr = sc.nextLine().trim();
+            java.sql.Date dataNascimento = java.sql.Date.valueOf(dataStr);
+
+            System.out.print("Código do curso: ");
+            int idCurso = Integer.parseInt(sc.nextLine().trim());
+            Courses curso = Courses.getById(idCurso);
+            if (curso == null) {
+                System.out.println("Curso não encontrado.");
+                return null;
+            }
+
+            System.out.print("CPF: ");
+            String cpf = sc.nextLine().trim();
+
+            return new StudentData(nome, telefone, telefone, dataNascimento, curso, cpf);
+
+        } catch (Exception e) {
+            System.out.println("Erro na leitura dos dados do aluno. Tente novamente.");
+            return null;
         }
     }
 }

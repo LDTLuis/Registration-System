@@ -20,6 +20,11 @@ public class StudentData {
         this.CPF = CPF;
     }
 
+    // Getters e Setters
+    public int getId() {
+        return id;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -30,6 +35,10 @@ public class StudentData {
 
     public String getMatricula() {
         return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 
     public String getTelefone() {

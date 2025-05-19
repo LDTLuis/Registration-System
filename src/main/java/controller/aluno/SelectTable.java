@@ -90,7 +90,7 @@ public class SelectTable {
                         rs.getString("matricula"),
                         rs.getString("telefone"),
                         rs.getDate("data_nascimento"),
-                        Courses.valueOf(rs.getString("curso").toUpperCase()),
+                        Courses.getByNomeCursos(rs.getString("curso")),
                         rs.getString("cpf")
                 );
             }

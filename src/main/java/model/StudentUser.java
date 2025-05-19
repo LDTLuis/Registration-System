@@ -27,6 +27,7 @@ public class StudentUser extends Users {
             System.out.println("====================");
             System.out.print("Enter the desired option or 'Exit' to finish: ");
             String opcao = sc.nextLine();
+            System.out.println();
 
             if (opcao.equals("Exit")) {
                 break;

@@ -11,33 +11,35 @@ public class LoginInterface {
         Scanner sc = new Scanner(System.in);
         UserDAO userDAO = new UserDAO();
 
-        System.out.println("=== Login ===");
-        System.out.print("Login: ");
-        String login = sc.nextLine();
+        while (true) {
 
-        System.out.print("Senha: ");
-        String senha = sc.nextLine();
+            System.out.println("=== Login ===");
+            System.out.print("Login: ");
+            String login = sc.nextLine();
 
-        Users users = userDAO.fazerLogin(login, senha);
+            System.out.print("Senha: ");
+            String senha = sc.nextLine();
 
-        if (users != null) {
-            System.out.println("\nSuccessful login!");
+            Users users = userDAO.fazerLogin(login, senha);
 
-            if (users instanceof AdminUser) {
-                System.out.println("Performing administrations of admin ...");
-                System.out.println();
-                users.showMenu();
+            if (users != null) {
+                System.out.println("\nSuccessful login!");
 
-            } else if (users instanceof StudentUser) {
-                StudentUser aluno = (StudentUser) users;
-                System.out.println("Performing student functions with enrollment: " + aluno.getMatricula());
-                System.out.println();
-                users.showMenu();
+                if (users instanceof AdminUser) {
+                    System.out.println("Performing administrations of admin ...");
+                    System.out.println();
+                    users.showMenu();
+
+                } else if (users instanceof StudentUser) {
+                    StudentUser aluno = (StudentUser) users;
+                    System.out.println("Performing student functions with enrollment: " + aluno.getMatricula());
+                    System.out.println();
+                    users.showMenu();
+                }
+
+            } else {
+                System.out.println("Login or Invalid Password.\n");
             }
-
-        } else {
-            System.out.println("Login or Invalid Password.");
         }
-
     }
 }

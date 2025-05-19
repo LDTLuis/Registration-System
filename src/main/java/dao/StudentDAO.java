@@ -8,9 +8,7 @@ import java.time.LocalDate;
 
 public class StudentDAO {
 
-    ConnectionFactory cf = new ConnectionFactory();
-
-    public void createTable (){
+    public void createTable() {
         String sql = """
                 CREATE TABLE IF NOT EXISTS alunos (
                     id SERIAL PRIMARY KEY,
@@ -23,22 +21,25 @@ public class StudentDAO {
                 );
                 """;
 
-        try(Connection conn = ConnectionFactory.getConnection();
-            Statement stmt = conn.createStatement()) {
+        try (Connection conn = ConnectionFactory.getConnection();
+             Statement stmt = conn.createStatement()) {
 
             stmt.executeUpdate(sql);
             System.out.println("Student table created successfully!");
 
-        } catch (SQLException e){
-            System.out.println("Error creating table");
+        } catch (SQLException e) {
+            System.out.println("Erro ao criar tabela de alunos.");
             e.printStackTrace();
         }
     }
 
-    public void insert (StudentData aluno){
-        String sql = "INSERT INTO alunos (nome, telefone, data_nascimento,curso, cpf) VALUES (?, ?, ?, ?, ?) RETURNING id";
-        try(Connection conn = ConnectionFactory.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+    public void insert(StudentData aluno) {
+        String sqlInsertAluno = "INSERT INTO alunos (nome, telefone, data_nascimento, curso, cpf) VALUES (?, ?, ?, ?, ?) RETURNING id";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sqlInsertAluno)) {
+
+            conn.setAutoCommit(false); // Inicia transação
 
             stmt.setString(1, aluno.getNome().toUpperCase());
             stmt.setString(2, aluno.getTelefone());
@@ -50,27 +51,46 @@ public class StudentDAO {
 
             if (rs.next()) {
                 aluno.setId(rs.getInt("id"));
+                int idGerado = aluno.getId();
 
-                int idGerado = rs.getInt("id");
+                // Gera matrícula
+                String matricula = gerarMatricula(idGerado, aluno.getCurso().getId());
+                aluno.setMatricula(matricula);
 
-                int anoAtual = LocalDate.now().getYear();
-                String codCurso = String.format("%02d", aluno.getCurso().getId());
-                String codId = String.format("%04d", idGerado);
-                String matricula = anoAtual + codCurso + codId;
+                // Atualiza a matrícula na tabela de alunos
+                String sqlUpdateMatricula = "UPDATE alunos SET matricula = ? WHERE id = ?";
+                try (PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdateMatricula)) {
+                    stmtUpdate.setString(1, matricula);
+                    stmtUpdate.setInt(2, idGerado);
+                    stmtUpdate.executeUpdate();
+                }
 
-                String sqlUpdate = "UPDATE alunos SET matricula = ? WHERE id = ?";
-                PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate);
-                stmtUpdate.setString(1, matricula);
-                stmtUpdate.setInt(2, idGerado);
-                stmtUpdate.executeUpdate();
+                // Insere o usuário associado
+                String sqlInsertUsuario = "INSERT INTO usuarios (login, senha, tipo, matricula) VALUES (?, ?, ?, ?)";
+                try (PreparedStatement stmtUsuario = conn.prepareStatement(sqlInsertUsuario)) {
+                    stmtUsuario.setString(1, matricula);
+                    stmtUsuario.setString(2, aluno.getCPF()); // senha padrão = CPF
+                    stmtUsuario.setString(3, "aluno");
+                    stmtUsuario.setString(4, matricula);
+                    stmtUsuario.executeUpdate();
+                }
 
-                System.out.println("Student successfully registered! Enrollment number: " + matricula);
+                conn.commit(); // Finaliza transação
+                System.out.println("Aluno e usuário inseridos com sucesso. Matrícula: " + matricula);
+
+            } else {
+                conn.rollback();
+                System.out.println("Erro ao obter ID do aluno.");
             }
 
-        }
-        catch (SQLException e) {
-            System.out.println("Error registering student.");
+        } catch (SQLException e) {
+            System.out.println("Erro ao registrar aluno e criar usuário.");
             e.printStackTrace();
         }
+    }
+
+    private String gerarMatricula(int id, int codCurso) {
+        int ano = LocalDate.now().getYear();
+        return ano + String.format("%02d", codCurso) + String.format("%04d", id);
     }
 }
