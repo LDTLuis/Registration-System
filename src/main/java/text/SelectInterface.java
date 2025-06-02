@@ -14,7 +14,7 @@ public class SelectInterface {
         SelectTable selectBy = new SelectTable();
         PrintStudent printStudent = new PrintStudent();
 
-        System.out.println("=== Search Menu === ");
+        System.out.println("\n=== Search Menu === ");
         System.out.println("1 - Select for name");
         System.out.println("2 - Select for matricula");
         System.out.println("3 - List All Students");

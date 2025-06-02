@@ -76,9 +76,9 @@ public class UserDAO {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("User inserted successfully!");
+                System.out.println("User inserted successfully!\n");
             } else {
-                System.out.println("No user was inserted.");
+                System.out.println("No user was inserted.\n");
             }
 
         } catch (SQLException e) {

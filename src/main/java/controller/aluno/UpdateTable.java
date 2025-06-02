@@ -86,9 +86,9 @@ public class UpdateTable {
             int linhaAlterada = stmt.executeUpdate();
 
             if (linhaAlterada > 0) {
-                System.out.println("\nField updated successfully!");
+                System.out.println("Field updated successfully!\n");
             } else {
-                System.out.println("\nNo student was found with that enrollment number.");
+                System.out.println("No student was found with that enrollment number.\n");
             }
 
         } catch (SQLException e) {

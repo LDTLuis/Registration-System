@@ -1,3 +1,4 @@
+import dao.StudentDAO;
 import text.CreateInterface;
 import text.LoginInterface;
 import util.ConnectionFactory;
@@ -11,6 +12,7 @@ public class Main {
         ConnectionFactory cf = new ConnectionFactory();
         LoginInterface loginInterface = new LoginInterface();
         CreateInterface createInterface = new CreateInterface();
+        StudentDAO studentDAO = new StudentDAO();
 
         Connection conn = cf.getConnection();
         try {
@@ -19,6 +21,8 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        // usuario: admin1
+        // senha: 1234
         createInterface.showMenuCreateTable();
 
         createInterface.insertAdminInTable();

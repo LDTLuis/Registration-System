@@ -17,7 +17,7 @@ public class StudentDAO {
                     telefone VARCHAR(255),
                     data_nascimento DATE NOT NULL,
                     curso VARCHAR(255) NOT NULL,
-                    cpf VARCHAR(255) NOT NULL
+                    cpf VARCHAR(255) NOT NULL UNIQUE
                 );
                 """;
 
@@ -39,7 +39,7 @@ public class StudentDAO {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sqlInsertAluno)) {
 
-            conn.setAutoCommit(false); // Inicia transação
+            conn.setAutoCommit(false);
 
             stmt.setString(1, aluno.getNome().toUpperCase());
             stmt.setString(2, aluno.getTelefone());
@@ -53,11 +53,9 @@ public class StudentDAO {
                 aluno.setId(rs.getInt("id"));
                 int idGerado = aluno.getId();
 
-                // Gera matrícula
                 String matricula = gerarMatricula(idGerado, aluno.getCurso().getId());
                 aluno.setMatricula(matricula);
 
-                // Atualiza a matrícula na tabela de alunos
                 String sqlUpdateMatricula = "UPDATE alunos SET matricula = ? WHERE id = ?";
                 try (PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdateMatricula)) {
                     stmtUpdate.setString(1, matricula);
@@ -65,7 +63,6 @@ public class StudentDAO {
                     stmtUpdate.executeUpdate();
                 }
 
-                // Insere o usuário associado
                 String sqlInsertUsuario = "INSERT INTO usuarios (login, senha, tipo, matricula) VALUES (?, ?, ?, ?)";
                 try (PreparedStatement stmtUsuario = conn.prepareStatement(sqlInsertUsuario)) {
                     stmtUsuario.setString(1, matricula);
@@ -75,8 +72,9 @@ public class StudentDAO {
                     stmtUsuario.executeUpdate();
                 }
 
-                conn.commit(); // Finaliza transação
+                conn.commit();
                 System.out.println("Aluno e usuário inseridos com sucesso. Matrícula: " + matricula);
+                System.out.println();
 
             } else {
                 conn.rollback();
@@ -93,4 +91,21 @@ public class StudentDAO {
         int ano = LocalDate.now().getYear();
         return ano + String.format("%02d", codCurso) + String.format("%04d", id);
     }
+
+    public Integer getIdByCpf(String cpf) {
+        String sql = "SELECT id FROM alunos WHERE cpf = ?";
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cpf);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
