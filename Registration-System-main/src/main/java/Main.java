@@ -1,0 +1,32 @@
+import dao.StudentDAO;
+import text.CreateInterface;
+import text.LoginInterface;
+import util.ConnectionFactory;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class Main {
+    public static void main(String[] args) {
+        ConnectionFactory cf = new ConnectionFactory();
+        LoginInterface loginInterface = new LoginInterface();
+        CreateInterface createInterface = new CreateInterface();
+        StudentDAO studentDAO = new StudentDAO();
+
+        Connection conn = cf.getConnection();
+        try {
+            Statement stmt = conn.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        // usuario: admin1
+        // senha: 1234
+        createInterface.showMenuCreateTable();
+
+        createInterface.insertAdminInTable();
+
+        loginInterface.showMenuLogin();
+    }
+}
